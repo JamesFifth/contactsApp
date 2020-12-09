@@ -1,0 +1,47 @@
+
+<% if user_signed_in? %>
+<h1>Contacts</h1>
+<table class="table table-hover table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Twitter</th>
+      <th hidden="true">User Id</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @friends.each do |friend| %>
+    <% if friend.user == current_user %>
+      <tr>
+        <td>
+        <%= link_to friend.first_name + " " + friend.last_name, friend %></td>
+        <td><%= friend.email %></td>
+        <td><%= friend.phone %></td>
+        <td><%= friend.twitter %></td>
+        <td hidden="true"><%= friend.user_id %></td>
+        <td><%= link_to 'Delete', friend, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Friend', new_friend_path, class:"btn btn-secondary" %>
+
+<% else %>
+
+<div class="jumbotron">
+  <h1 class="display-4">Hello, friend!</h1>
+  <p class="lead">To add friends into your account, you need to sign in or sign up first</p>
+  <hr class="my-4">
+  <br/><br/>
+  <%= link_to 'Go back Home', welcome_index_path, class:"btn btn-lg btn-outline-primary"%>
+</div>
+ 
+<% end %>
